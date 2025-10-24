@@ -1,7 +1,7 @@
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useEffect, useMemo, useState } from "react";
-import { Platform, SafeAreaView, StatusBar, StyleSheet, Text, TouchableHighlight, View, useWindowDimensions } from "react-native";
+import { Platform, Pressable, SafeAreaView, StatusBar, StyleSheet, Text, View, useWindowDimensions } from "react-native";
 import ConfettiCannon from "react-native-confetti-cannon";
 
 const useFont = () => {
@@ -101,54 +101,52 @@ export default function HomeScreen(){
             <Text style={[styles.title, { fontSize: f(22) }]}>
               Welcome to the Stone Paper Scissors Game
             </Text>
-            <TouchableHighlight
-              style={styles.primaryButton}
-              activeOpacity={0.7}
-              underlayColor="#5db6d6"
+            <Pressable
               onPress={() => setGameDisplay(true)}
+              style={({ pressed }) => [
+                 styles.primaryButton,
+                 pressed && { opacity: 0.7 }
+                  ]}
             >
               <Text style={[styles.primaryText, { fontSize: f(18) }]}>
                 Start
               </Text>
-            </TouchableHighlight>
+            </Pressable>
           </View>
         ) : (
           <View style={styles.contentGap}>
             <View style={styles.controlsWrap}>
-              <TouchableHighlight
-                style={styles.choiceButton}
+              <Pressable
+                style={({pressed}) => [styles.choiceButton, pressed && {opacity:0.8}]}
                 disabled={gameOver}
-                underlayColor="#95d1e8"
                 onPress={handlePlayerRockClick}
               >
                 <Text style={[styles.choiceText, { fontSize: f(16) }]}>
                   <FontAwesome5 name="hand-rock" size={18} color="black" /> Rock
                 </Text>
-              </TouchableHighlight>
+              </Pressable>
 
-              <TouchableHighlight
-                style={styles.choiceButton}
+              <Pressable
+                style={({pressed}) => [styles.choiceButton, pressed && {opacity:0.8}]}
                 disabled={gameOver}
-                underlayColor="#95d1e8"
                 onPress={handlePlayerPaperClick}
               >
                 <Text style={[styles.choiceText, { fontSize: f(16) }]}>
                   <FontAwesome5 name="hand-paper" size={18} color="black" />{" "}
                   Paper
                 </Text>
-              </TouchableHighlight>
+              </Pressable>
 
-              <TouchableHighlight
-                style={styles.choiceButton}
+              <Pressable
+                style={({pressed}) => [styles.choiceButton, pressed && {opacity:0.8}]}
                 disabled={gameOver}
-                underlayColor="#95d1e8"
                 onPress={handlePlayerScissorsClick}
               >
                 <Text style={[styles.choiceText, { fontSize: f(16) }]}>
                   <FontAwesome5 name="hand-scissors" size={18} color="black" />{" "}
                   Scissors
                 </Text>
-              </TouchableHighlight>
+              </Pressable>
             </View>
 
             <View style={styles.card}>
@@ -182,30 +180,28 @@ export default function HomeScreen(){
 
             {!gameOver ? (
               <View style={styles.centerBlock}>
-                <TouchableHighlight
+                <Pressable
                   style={styles.primaryButton}
-                  underlayColor="#5db6d6"
                   onPress={handleRestart}
                 >
                   <Text style={[styles.primaryText, { fontSize: f(18) }]}>
                     Reset
                   </Text>
-                </TouchableHighlight>
+                </Pressable>
               </View>
             ) : (
               <View style={styles.centerBlock}>
                 <Text style={[styles.winText, { fontSize: f(20) }]}>
                   {winner} Wins <MaterialIcons name="celebration" size={24} color="black" />
                 </Text>
-                <TouchableHighlight
+                <Pressable
                   style={styles.primaryButton}
-                  underlayColor="#5db6d6"
                   onPress={handleRestart}
                 >
                   <Text style={[styles.primaryText, { fontSize: f(18) }]}>
                     Restart
                   </Text>
-                </TouchableHighlight>
+                </Pressable>
               </View>
             )}
           </View>
